@@ -1,18 +1,16 @@
+
 <?php 
 session_start();
 require_once('db.php');
-// Yhdistetään tietokantaan
+// Kirjaudutaan tietokantaan
 $conn = db_connect();
 
-$tunnus = $_POST['tunnus'];
-$password = $_POST['password'];
-
-
-
+$user = $_POST["kayttaja"];
+$pass = $_POST["salasana"];
 
 
 //haetaan käyttäjätiedot 
-$sql = "select tunnus, password FROM user WHERE tunnus = '$tunnus' AND password = '$password'";
+$sql = "select kayttaja, salasana FROM tunnukset WHERE kayttaja = '$user' AND salasana = '$pass'";
 $results = $conn->query($sql) or die( $conn->error ); 
  
 if (!$results) {
@@ -20,13 +18,13 @@ if (!$results) {
 	exit();
 }
 
-if ($results->num_rows == 1) {  //Login onnistui
+if ($results->num_rows == 1) {  //Kirjautuminen onnistui
 
 
-	$_SESSION["tunnus"] = $tunnus; // Kun kirjautuminen onnistuu, sivu ohjautuu muistipeli sivulle
+	$_SESSION["kayttaja"] = $user
 	header("Location: muistipeli.html");
-} else echo "Login fails! <br>"; //jos epäonnistuu, niin tulee teksti login fails
+} else echo "Login fails! <br>";
 
 
-$results->close(); 
+$results->close();
 ?>
