@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/tyyli.css">
-    <title>Rekisteröityminen</title>
-  </head>
-  <body>
-    <h1>Rekisteröidy</h1>
-    <form class="" action="uusikayttaja.php" method="post">
-      <label for="kayttaja">Käyttäjänimi:</label>
-      <input type="text" name="kayttaja" value=""><br/>
-      <label for="salasana">Salasana:</label>
-      <input type="password" name="salasana" value=""><br/>
-      <input type="submit" name="laheta" value="Lähetä">
-    </form>
-  </body>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link href="style.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rekisteröityminen</title>
+  
+</head>
+    <body>
+      <div class="wrapper">
+        <h1>Rekisteröidy</h1>
+          <form action="uusikayttaja.php" method="post">
+          <p><label for="kayttaja">Käyttäjänimi:</label>
+          <input type="text" name="kayttaja" value=""><br/>
+          <p><label for="salasana">Salasana:</label>
+          <input type="password" name="salasana" value=""><br/>
+           <p><input type="submit" name="laheta" value="Lähetä">
+          </form>
+      </div>
+    </body>
 </html>
