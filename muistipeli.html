@@ -7,9 +7,15 @@
 
   <script type="text/javascript" src="js/peli.js"></script>
 </head>
-<body>
+<body onload="testi()">
   <p>Peli tulee tänne</p>
-  <button type="button" onclick="return sekoita(korttiLista)">testi</button>
+  <select id="gameMode">
+    <option value="4x4">4x4</option>
+    <option value="5x5">5x5</option>
+    <option value="6x6">6x6</option>
+  </select>
+  <button type="button" onclick="return sekoita(korttiLista)">shuffle</button>
+  <button type="button" onclick="return testi()">testi</button>
     <button type="button" onclick="return konsoliAuta()">mitä konsoli sanoo</button>
   <div id="peli"></div>
 </body>

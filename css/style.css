@@ -1,0 +1,38 @@
+#peli {
+  background-image: url("img/card_back.jpg");
+  width: 650px;
+  height: 650px;
+  display: flex;
+  flex-wrap: wrap;
+}
+body {
+  background-color: #000;
+  background-image: url("img/card_back.jpg");
+}
+.kortti {
+  width: calc(25% - 10px);
+  height: calc(25% - 10px);
+  margin: 5px;
+  position: relative;
+}
+.selka,
+.A,
+.B,
+.C,
+.D {
+  position: absolute;
+  backface-visibility: hidden;
+}
+.A.flip,
+.B.flip,
+.C.flip,
+.D.flip {
+  transform: rotateY(180deg);
+}
+.kortti:active {
+
+  transform: scale(0.97);
+
+  transition: transform .2s;
+
+}

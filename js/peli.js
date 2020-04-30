@@ -1,14 +1,15 @@
 var korttiLista = [
-  {tyyppi: 'A', kuva: 'img/card_dog'},
-  {tyyppi: 'A', kuva: 'img/card_dog'},
-  {tyyppi: 'B', kuva: 'img/card_cat'},
-  {tyyppi: 'B', kuva: 'img/card_cat'},
-  {tyyppi: 'C', kuva: 'img/card_goat'},
-  {tyyppi: 'C', kuva: 'img/card_goat'},
-  {tyyppi: 'D', kuva: 'img/card_octo'},
-  {tyyppi: 'D', kuva: 'img/card_octo'}
+  {pari: 'A', kuva: 'img/card_dog.jpg'},
+  {pari: 'A', kuva: 'img/card_dog.jpg'},
+  {pari: 'B', kuva: 'img/card_cat.jpg'},
+  {pari: 'B', kuva: 'img/card_cat.jpg'},
+  {pari: 'C', kuva: 'img/card_goat.jpg'},
+  {pari: 'C', kuva: 'img/card_goat.jpg'},
+  {pari: 'D', kuva: 'img/card_octo.jpg'},
+  {pari: 'D', kuva: 'img/card_octo.jpg'}
 ];
-
+var valinta = [];
+var klikkaukset = [];
 //tähän pitäisi tulla koodia joka tuo kuvat peli diviin
 function peliLauta() {
 
@@ -16,12 +17,47 @@ function peliLauta() {
 
 function testi() {
 console.log('toimii');
-var img = document.createElement("img");
+sekoita(korttiLista);
+for(var i = 0; i < korttiLista.length; i++) {
+  //luodaan divi
+  var card = document.createElement('div');
+  card.classList.add('kortti');
+  document.getElementById("peli").appendChild(card);
+  //luodaan kortin etupuoli ja lisätään se diviin
+  var front = document.createElement('img');
+  front.src = korttiLista[i].kuva;
+  front.className = 'selka';
+  card.appendChild(front);
+  //luodaan kortin selkä ja lisätään se diviin
+  var back = document.createElement('img');
+  back.src = 'img/card_back.jpg';
+  back.className = korttiLista[i].pari;
+  card.appendChild(back);
+  //lisätään kortin selkään event listener
+  back.addEventListener('click', function() {
+    var kortti = this.className;
+    this.classList.toggle('flip');
+    console.log('klikkaus')
+    valinta.push(kortti);
+    console.log(valinta);
+    //console.log(this.alt);
+    if (valinta.length === 1) {
+      console.log('pöö');
+    }
+    if (valinta[0] === valinta[1]) {
+      console.log('tööt');
+      console.log(valinta);
+      valinta == [];
+    }
+    if (valinta.length === 2) {
+      valinta = [];
+    }
 
-img.src = "img/card_octo.jpg";
-var src = document.getElementById("peli");
+  });
+  //var lauta = document.getElementById("peli");
 
-src.appendChild(img);
+
+  }
 }
 
 //ei tunnu toimivan ainakaan taulukoissa joissa on objekteja
@@ -41,10 +77,14 @@ function sekoita(taulukko){
       return taulukko;
 }
 
+
+//testi();
 //ihan vaan testausta varten
 //voisi varmaan järkevämminkin tehdä?
 function konsoliAuta() {
   console.log(korttiLista);
+  console.log(korttiLista[0].kuva)
+  console.log(korttiLista.length)
 }
 //shuffle(korttiLista);
 
