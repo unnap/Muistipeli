@@ -20,7 +20,7 @@ if(mysqli_connect_error()){
 
 $kysely = "INSERT INTO tunnukset (kayttaja, salasana) VALUES ('$user', MD5('$pass'))";
 if (mysqli_query($link, $kysely)) {
-      echo "Uudet tiedostot paivitetty";
+      header('location: muistipeli.html');
 } else {
       echo "Virhe: " . $kysely . "<br>" . mysqli_error($link);
 }
