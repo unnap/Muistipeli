@@ -8,91 +8,84 @@ var korttiLista = [
   {pari: 'D', kuva: 'img/card_octo.jpg'},
   {pari: 'D', kuva: 'img/card_octo.jpg'}
 ];
+//taulukko parin vertausta varten
 var valinta = [];
-var klikkaukset = [];
-//tähän pitäisi tulla koodia joka tuo kuvat peli diviin
-function peliLauta() {
+//taulukko korteista jotka on käännetty
+var flipatut = [];
 
+function sekoita(pakka) {
+  pakka.sort(function(a, b) {return 0.5 - Math.random()});
+  return pakka;
 }
 
-function testi() {
-console.log('toimii');
-sekoita(korttiLista);
-for(var i = 0; i < korttiLista.length; i++) {
-  //luodaan divi
-  var card = document.createElement('div');
-  card.classList.add('kortti');
-  document.getElementById("peli").appendChild(card);
-  //luodaan kortin etupuoli ja lisätään se diviin
-  var front = document.createElement('img');
-  front.src = korttiLista[i].kuva;
-  front.className = 'selka';
-  card.appendChild(front);
-  //luodaan kortin selkä ja lisätään se diviin
-  var back = document.createElement('img');
-  back.src = 'img/card_back.jpg';
-  back.className = korttiLista[i].pari;
-  card.appendChild(back);
-  //lisätään kortin selkään event listener
-  back.addEventListener('click', function() {
-    var kortti = this.className;
-    this.classList.toggle('flip');
-    console.log('klikkaus')
-    valinta.push(kortti);
-    console.log(valinta);
-    //console.log(this.alt);
-    if (valinta.length === 1) {
-      console.log('pöö');
-    }
+function ajastin(x) {
+  setTimeout(function() {
+    document.getElementById(x[0]).childNodes[1].style.visibility = 'visible'
+    document.getElementById(x[1]).childNodes[1].style.visibility = 'visible'
+    flipatut = [];
+    valinta = [];
+  }, 1000)
+}
+
+//kortin kääntö funktio
+function flippaa() {
+  var selkaFlip = this.childNodes;
+  var flipattuKortti = this.getAttribute('id');
+  //piilottaa selän
+  selkaFlip[1].style.visibility = 'hidden';
+  //lisää taulukkoon kortin pari-tunnisteen
+  valinta.push(this.getAttribute('data-pari'));
+  //lisää taulukkoon kortin id:n
+  flipatut.push(flipattuKortti);
+  console.log(valinta);
+  console.log(flipatut);
+
+
+
+  if (valinta.length === 2) {
+
+    //jos löytyy pari
     if (valinta[0] === valinta[1]) {
       console.log('tööt');
       console.log(valinta);
-      valinta == [];
-    }
-    if (valinta.length === 2) {
+
+      //poistaa kortin valinta funktion
+      document.getElementById(flipatut[0]).removeEventListener('click', flippaa);
+      document.getElementById(flipatut[1]).removeEventListener('click', flippaa);
       valinta = [];
+      flipatut = [];
+    } else {
+      //jos ei löytynyt paria, kääntää kortit nurin vähän ajan päästä
+      ajastin(flipatut);
+      console.log('ajastin');
     }
-
-  });
-  //var lauta = document.getElementById("peli");
-
-
   }
 }
 
-//ei tunnu toimivan ainakaan taulukoissa joissa on objekteja
-//jätän sen silti tähän for now
-/*function shuffle(lista) {
-  for (let i = lista.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [lista[i], lista[j] = [lista[j], lista[i]]];
+//pelin luonti
+function peliLauta() {
+  sekoita(korttiLista);
+  for(var i = 0; i < korttiLista.length; i++) {
+    //luodaan divi jonka sisään tulee kortti
+    var kortti = document.createElement('div');
+    kortti.classList.add('kortti');
+    kortti.setAttribute('id', i);
+    kortti.dataset.pari = korttiLista[i].pari;
+    document.getElementById('peli').appendChild(kortti);
+
+    //lisätään kortin kääntö funktio
+    kortti.addEventListener('click', flippaa);
+
+    //luodaan kortin etupuoli
+    var naama = document.createElement('img');
+    naama.src = korttiLista[i].kuva;
+    naama.className = 'naama';
+    kortti.appendChild(naama);
+
+    //luodaan kortin selkä
+    var selka = document.createElement('img');
+    selka.src = 'img/card_back.jpg';
+    selka.className = 'selka';
+    kortti.appendChild(selka);
   }
-  console.log(korttiLista);
-}*/
-
-//opettajan antama koodi joka sekoittaa pakan
-//ainakin toimii toisin kuin tuo edellinen
-function sekoita(taulukko){
-      taulukko.sort(function(a, b){return 0.5 - Math.random()});
-      return taulukko;
 }
-
-
-//testi();
-//ihan vaan testausta varten
-//voisi varmaan järkevämminkin tehdä?
-function konsoliAuta() {
-  console.log(korttiLista);
-  console.log(korttiLista[0].kuva)
-  console.log(korttiLista.length)
-}
-//shuffle(korttiLista);
-
-//opettajan antama ajastin koodi
-//en ole testannut vielä
-function odota() {
-  setTimeout(function() {
-    console.log('tähän mitä haluun tehä?');
-  }, 1000);
-}
-console.log(korttiLista);
